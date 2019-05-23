@@ -21,12 +21,14 @@ public class launchPad : MonoBehaviour
         switch (directions)
         {
             case Directions.Up:
+                Player.instance.rb.velocity = new Vector2(Player.instance.rb.velocity.x,0);
                 Player.instance.rb.AddForce(Vector2.up * force);
                 break;
 
 
             case Directions.Down:
-                Player.instance.rb.AddForce(Vector2.down * force);
+                Player.instance.rb.velocity = new Vector2(Player.instance.rb.velocity.x, 0);
+                Player.instance.rb.AddForce(Vector2.down* force);
                 break;
 
 

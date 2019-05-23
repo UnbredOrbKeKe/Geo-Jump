@@ -14,9 +14,9 @@ public class Player : MonoBehaviour
     public float rotationSpeed = 1;
     private float z_axis = 0;
     public float timer = 0.0f;
-    public float speed = 0;
+    public float speed = 5.5f;
     public float keepJumping;
-    public float jumpRate = 0.5f;
+    public float jumpRate = 0.8f;
 
     [SerializeField]
     protected float targetRot = 0;
@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
 
     public static Player instance;
 
-    float delay = 15.0f;
+    float delay = 2.3f;
     
     // Use this for initialization
 
@@ -46,14 +46,14 @@ public class Player : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         Vector3 vel = rb.velocity;
-        vel.x = 5.5f;
+        vel.x = speed;
         rb.velocity = vel;
 
         
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
 
         Vector3 vel = rb.velocity;
@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
             Debug.Log(Time.time);
             Debug.Log(delay);
         }
-        vel.x = 5.5f;
+        vel.x = speed;
         rb.velocity = vel;
 
 
@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
         float new_axis = Mathf.LerpAngle(z_axis, targetRot, timer);
         transform.rotation = Quaternion.Euler(0, 0, new_axis);
 
-        if (Physics2D.Raycast(transform.position, Vector2.down, GetComponent<BoxCollider2D>().size.y / 2 + 0.4f, layers))
+        if (Physics2D.Raycast(transform.position, Vector2.down, GetComponent<BoxCollider2D>().size.y / 2 + 0.1f, layers))
         {
             Quaternion rot = transform.rotation;
             transform.rotation = rot;
