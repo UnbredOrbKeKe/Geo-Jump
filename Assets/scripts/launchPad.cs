@@ -8,7 +8,7 @@ public enum Directions
     Down,
 }
 
-public class launchPad : MonoBehaviour
+public class launchPad : Player
 {
     public Directions directions;
     public float force;

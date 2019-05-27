@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour
+public class Player : GameManager
 {
     public Rigidbody2D rb;
 
@@ -13,9 +13,9 @@ public class Player : MonoBehaviour
 
     public float rotationSpeed = 1;
     private float z_axis = 0;
-    public float timer = 0.0f;
+    protected float timer = 0.0f;
     public float speed = 5.5f;
-    public float keepJumping;
+    protected float keepJumping;
     public float jumpRate = 0.8f;
 
     [SerializeField]
