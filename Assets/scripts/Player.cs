@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Player : GameManager
+public class Player : MonoBehaviour
 {
     public Rigidbody2D rb;
 
@@ -114,7 +114,7 @@ public class Player : GameManager
     public void Die()
     {
         Debug.Log("test");
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("lvl1");
     }
 
     
