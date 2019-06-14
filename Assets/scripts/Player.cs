@@ -2,21 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+/// <summary>
+/// this script controlles all the things for the player (jump, speed, what happents when the player dies)
+/// </summary>
 public class Player : MonoBehaviour
 {
-    public Rigidbody2D rb;
+    public Rigidbody2D rb; 
 
-    public ParticleSystem playerParticle;
-
-
-
-    public float rotationSpeed = 1;
+    private float rotationSpeed = 1;
     private float z_axis = 0;
-    public float timer = 0.0f;
+    protected float timer = 0.0f; 
+
+    
     public float speed = 5.5f;
-    public float keepJumping;
-    public float jumpRate = 0.8f;
+
+    private float keepJumping;
+
+    [SerializeField]
+    protected float jumpRate = 0.8f;
 
     [SerializeField]
     protected float targetRot = 0;
@@ -27,11 +30,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     protected int jumpCount = 1;
 
-    public LayerMask layers;
+    [SerializeField]
+    private LayerMask layers; // wil ik public houden
 
-    public static Player instance;
+    public static Player instance; // wil ik public houden
 
-    float delay = 2.3f;
+    private float delay = 2.3f;
     
     // Use this for initialization
 
@@ -43,7 +47,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-
+        //gives a jump start at the biginning becauses otherwise the die function registers it as going below 0.01 speed and that triggers the death function
         rb = GetComponent<Rigidbody2D>();
         Vector3 vel = rb.velocity;
         vel.x = speed;
@@ -55,7 +59,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //calls the die function when you hit an object or go below velocity 0.01
         Vector3 vel = rb.velocity;
         if (vel.magnitude < 0.01f)
         {           
@@ -64,9 +68,6 @@ public class Player : MonoBehaviour
             {
                 Die();
             }
-            
-            Debug.Log(Time.time);
-            Debug.Log(delay);
         }
         vel.x = speed;
         rb.velocity = vel;
@@ -77,7 +78,7 @@ public class Player : MonoBehaviour
         timer += Time.deltaTime * rotationSpeed;
         float new_axis = Mathf.LerpAngle(z_axis, targetRot, timer);
         transform.rotation = Quaternion.Euler(0, 0, new_axis);
-
+        //shoots a raycast towards the ground to check if you are on the ground so that you can't keep jumping in the air
         if (Physics2D.Raycast(transform.position, Vector2.down, GetComponent<BoxCollider2D>().size.y / 2 + 0.1f, layers))
         {
             Quaternion rot = transform.rotation;
@@ -90,6 +91,8 @@ public class Player : MonoBehaviour
             // lets the player jump when you touch the screen/use your mouse button
             if (Input.GetMouseButton(0) && Time.time > keepJumping)
             {
+
+                //sets a jump rate where the if statement takes the speed from that lets the player jump while holding jump
                 Debug.Log("jump");
                 keepJumping = Time.time + jumpRate;
 
@@ -97,6 +100,7 @@ public class Player : MonoBehaviour
                 rb.velocity = Vector2.zero;
                 rb.AddForce(Vector2.up * 55000);
 
+                //sets rotations where the player rotates to so that it lands on a flat side
                 timer = 0;
                 z_axis = transform.rotation.eulerAngles.z;
                 targetRot -= 90;
@@ -110,11 +114,13 @@ public class Player : MonoBehaviour
     }
 
 
-    //resets the level completely
+    /// <summary>
+    /// resets level when called
+    /// </summary>
+
     public void Die()
     {
-        Debug.Log("test");
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     
