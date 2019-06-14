@@ -69,8 +69,8 @@ public class Player : MonoBehaviour
                 Die();
             }
         }
-        vel.x = speed;
-        rb.velocity = vel;
+        //vel.x = speed;
+        //rb.velocity = vel;
 
 
 
@@ -111,6 +111,11 @@ public class Player : MonoBehaviour
            
         }
 
+    }
+
+    void FixedUpdate()
+    {
+        transform.Translate(Vector2.right * speed);
     }
 
 
